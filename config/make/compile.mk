@@ -1,0 +1,33 @@
+# ***************************
+# *** Create Object Files ***
+# ***************************
+
+$(OBJECT_FILE_MAIN_C): $(SOURCE_FILE_MAIN_C)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -O3 -c $< -o $@
+
+# ***********************
+# *** Create Binaries ***
+# ***********************
+
+$(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_STATIC_RDB): $(FIND_OBJECT_FILES_INPUT_COBOL) $(FIND_OBJECT_FILES_OUTPUT_COBOL)
+	@mkdir -p $(dir $@)
+	$(AR) $(ARFLAGS) $@ $^ $(LD_STATIC_LINK)
+
+$(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_STATIC_VERSION): $(FIND_OBJECT_FILES_INPUT_COBOL) $(FIND_OBJECT_FILES_OUTPUT_COBOL)
+	@mkdir -p $(dir $@)
+	$(AR) $(ARFLAGS) $@ $^ $(LD_STATIC_LINK)
+
+
+$(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_SHARED_RDB): $(FIND_OBJECT_FILES_INPUT_COBOL) $(FIND_OBJECT_FILES_OUTPUT_COBOL)
+	@mkdir -p $(dir $@)
+	$(LDCOB) $(LDFLAGS) -fstatic-call -Q -Wl,-soname=$(BINARY_FILE_LIBRARY_SHARED_VERSION) -b -o $@ $^ $(LD_DYNAMIC_LINK) -Q $(LD_RELATIVE_PATH)
+
+$(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_SHARED_VERSION): $(FIND_OBJECT_FILES_INPUT_COBOL) $(FIND_OBJECT_FILES_OUTPUT_COBOL)
+	@mkdir -p $(dir $@)
+	$(LDCOB) $(LDFLAGS) -fstatic-call -b -o $@ $^ $(LD_DYNAMIC_LINK) -Q $(LD_RELATIVE_PATH)
+
+
+$(BINARY_FILE_EXECUTABLE_TEST): $(OBJECT_FILE_MAIN_C)
+	@mkdir -p $(dir $@)
+	$(LD) $(LDFLAGS) -o $@ $< $(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_STATIC_VERSION) $(LD_DYNAMIC_LINK) $(LD_RELATIVE_PATH)
