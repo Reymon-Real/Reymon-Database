@@ -6,7 +6,7 @@ Solo es un mini proyecto para pasar una materia.
 
 # Dependencias
 - `libz` instalada a nivel sistema
-- IBM COBOL for Linux 1.2.0 o superior (disponible gratis en ibm.com)
+- IBM COBOL for Linux 1.2.0 o superior (disponible la versión de prueba en ibm.com)
 
 # Compilación
 Ejecuta `make` o `make -j$(nproc)` para compilar.
