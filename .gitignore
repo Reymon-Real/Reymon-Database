@@ -4,6 +4,9 @@
 
 *.sh
 *.db
+*.rdb
+
+test
 
 # **********************
 # *** Ignore Folders ***

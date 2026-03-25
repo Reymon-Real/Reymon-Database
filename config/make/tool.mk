@@ -3,7 +3,7 @@
 # *****************
 
 CC  := gcc
-COB := cobc
+COB := cob2
 
 # *****************
 # *** Utilities ***
@@ -12,4 +12,4 @@ COB := cobc
 AR := ar
 
 LD    := gcc
-LDCOB := cobc
+LDCOB := cob2

@@ -1,6 +1,6 @@
       ********************************
       *** Author:  Reymon Dev      ***
-      *** File:    db.cbl          ***
+      *** File:    reydb.cpy       ***
       *** Date:    18/03/2026      ***
       *** Update:  20/03/2026      ***
       *** License: AGPL-3-or-later ***
@@ -11,5 +11,5 @@
       *************************
 
        FD FC-REYMON-DATABASE.
-       01 FS-PRIMARY-KEY PIC 9(18) COMP.
+       01 FS-PRIMARY-KEY PIC X(18).
        01 FS-BUFFER      PIC X(4088).

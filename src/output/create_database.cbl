@@ -2,7 +2,7 @@
       *** Author:  Reymon Dev      ***
       *** File:    add.cbl         ***
       *** Date:    18/03/2026      ***
-      *** Update:  18/03/2026      ***
+      *** Update:  26/03/2026      ***
       *** License: AGPL-3-or-later ***
       ********************************
 
@@ -11,29 +11,66 @@
       ***       of the program            ***
       ***************************************
 
+      ************************************************************************************
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. rdb_create_database.
+       PROGRAM-ID. REYDB_CREATE_DATABASE.
+       AUTHOR. Reymon Dev.
+       DATE-WRITTEN.  March 18 from 2026.
+       DATE-COMPILED. March 24 from 2026.
+      ************************************************************************************
 
+      ************************************************************************************
        ENVIRONMENT DIVISION. 
+      ************************************************************************************
 
+      ************************************************************************************
        INPUT-OUTPUT SECTION.
-
        FILE-CONTROL.
-       COPY "file/control/rdb.cpy".
+       
+       COPY "file/control/reydb.cpy". *> Define Database File
+      ************************************************************************************
 
+      ************************************************************************************
        DATA DIVISION.
+      ************************************************************************************
 
+      ************************************************************************************
        FILE SECTION.
-       COPY "file/section/rdb.cpy".
+       
+       COPY "file/section/reydb.cpy". *> Define Logic Database
+      ************************************************************************************
 
+      ************************************************************************************
        WORKING-STORAGE SECTION.
-       COPY "data/working/rdb.cpy".
-
+       
+       COPY "data/working/reydb.cpy". *> Define in local data the logic file
+       COPY "data/working/state.cpy". *> Define Constants
+      ************************************************************************************
+      
+      ************************************************************************************
        LINKAGE SECTION.
-       COPY "data/linkage/file-control.cpy".
+       
+       COPY "data/linkage/reydb.cpy". *> Define for linking the logic file
+      ************************************************************************************
+      
+      ************************************************************************************
+       PROCEDURE DIVISION USING     LS-REYMON-DATABASE-NAME
+                          RETURNING LS-REYMON-DATABASE-RESULT.
 
-       PROCEDURE DIVISION USING LS-REYMON-DATABASE-NAME
-                                LS-REYMON-DATABASE-FILE-STATUS.
+           PERFORM CREATE-FILE.
+           PERFORM RESULT.
 
+           GOBACK.
+      ************************************************************************************
+
+      ************************************************************************************
+       CREATE-FILE.
            OPEN OUTPUT FC-REYMON-DATABASE.
            CLOSE FC-REYMON-DATABASE.
+      ************************************************************************************
+
+      ************************************************************************************
+       RESULT.
+           MOVE WS-REYDB-CREATE-SUCCESS
+           TO   LS-REYMON-DATABASE-RESULT.
+      ************************************************************************************

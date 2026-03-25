@@ -2,8 +2,7 @@
 # *** Main Rule ***
 # *****************
 
-all: object-main object-input object-output \
-     binary-library-version binary-library-file binary-executable
+all: object library executable
 
 # ********************
 # *** Execut Rules ***
@@ -19,24 +18,26 @@ run: $(BINARY_FILE_EXECUTABLE_TEST)
 clean: clean-object clean-binary
 
 distclean:
-	$(RM) $(RMFLAGS) build
+	$(RM) $(RMFLAGS) build $(LIBRARY_FOLDER)/$(BINARY_FILE_LIBRARY_SHARED_REYDB) $(BINARY_FILE_EXECUTABLE_TEST)
 
 clean-object: clean-main clean-input clean-output
 
-clean-binary: clean-librdb clean-executable
+clean-binary: clean-libreydb clean-executable
 
 clean-main:
 	$(RM) $(RMFLAGS) $(OBJECT_FILE_MAIN_C)
 
+clean-utils:
+	$(RM) $(RMFLAGS) $(FIND_OBJECT_FILES_UTILS_C) $(FIND_OBJECT_FILES_UTILS_COBOL)
+
 clean-input:
-	$(RM) $(RMFLAGS) $(FIND_OBJECT_FILES_INPUT_COBOL)
+	$(RM) $(RMFLAGS) $(FIND_OBJECT_FILES_INPUT_C) $(FIND_OBJECT_FILES_INPUT_COBOL)
 
 clean-output:
-	$(RM) $(RMFLAGS) $(FIND_OBJECT_FILES_OUTPUT_COBOL)
+	$(RM) $(RMFLAGS) $(FIND_OBJECT_FILES_OUTPUT_C) $(FIND_OBJECT_FILES_OUTPUT_COBOL)
 
-clean-librdb:
-	$(RM) $(RMFLAGS) $(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_STATIC_RDB)     $(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_SHARED_RDB) \
-	                 $(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_STATIC_VERSION) $(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_SHARED_VERSION)
+clean-libreydb:
+	$(RM) $(RMFLAGS) $(LIBRARY_FOLDER)/$(BINARY_FILE_LIBRARY_SHARED_REYDB)
 
 clean-executable:
 	$(RM) $(RMFLAGS) $(BINARY_FILE_EXECUTABLE_TEST)
@@ -51,13 +52,14 @@ object-main: $(OBJECT_FILE_MAIN_C)
 # *** Object Rules ***
 # ********************
 
-object-input:  $(FIND_OBJECT_FILES_INPUT_COBOL)
-object-output: $(FIND_OBJECT_FILES_OUTPUT_COBOL)
+object-utils:  $(FIND_OBJECT_FILES_UTILS_COBOL)  $(FIND_OBJECT_FILES_UTILS_C)
+object-input:  $(FIND_OBJECT_FILES_INPUT_COBOL)  $(FIND_OBJECT_FILES_INPUT_C)
+object-output: $(FIND_OBJECT_FILES_OUTPUT_COBOL) $(FIND_OBJECT_FILES_OUTPUT_C)
 
 # ********************
 # *** Binary Rules ***
 # ********************
 
-binary-executable:      $(BINARY_FILE_EXECUTABLE_TEST)
-binary-library-file:    $(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_STATIC_RDB)     $(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_SHARED_RDB)
-binary-library-version: $(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_STATIC_VERSION) $(BUILD_FOLDER_LIB)/$(BINARY_FILE_LIBRARY_SHARED_VERSION)
+object:     object-main object-utils object-input object-output
+library:    $(LIBRARY_FOLDER)/$(BINARY_FILE_LIBRARY_SHARED_REYDB)
+executable: $(BINARY_FILE_EXECUTABLE_TEST)

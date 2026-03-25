@@ -1,0 +1,22 @@
+      ********************************
+      *** Author:  Reymon Dev      ***
+      *** File:    reydb_state.cpy ***
+      *** Date:    20/03/2026      ***
+      *** Update:  20/03/2026      ***
+      *** License: AGPL-3-or-later ***
+      ********************************
+
+       01 WS-REYDB-SUCCESS.
+          02 FILLER PIC 9(4) VALUE ZERO COMP-5.
+
+       01 WS-REYDB-FAILURE.
+          02 FILLER PIC 9(4) VALUE 00001 COMP-5.
+
+       01 WS-REYDB-CREATE-SUCCESS.
+          02 FILLER PIC 9(4) VALUE 00002 COMP-5.
+
+       01 WS-REYDB-CREATE-FAILURE.
+          02 FILLER PIC 9(4) VALUE 00003 COMP-5.
+
+       01 WS-REYDB-CRITICAL-ERROR.
+          02 FILLER PIC 9(4) VALUE 32768 COMP-5.

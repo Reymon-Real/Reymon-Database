@@ -1,6 +1,6 @@
       ********************************
       *** Author:  Reymon Dev      ***
-      *** File:    db.cbl          ***
+      *** File:    reydb.cpy       ***
       *** Date:    18/03/2026      ***
       *** Update:  20/03/2026      ***
       *** License: AGPL-3-or-later ***
@@ -11,8 +11,7 @@
       *************************************
 
            SELECT OPTIONAL FC-REYMON-DATABASE
-           ASSIGN DYNAMIC LS-REYMON-DATABASE-NAME
+           ASSIGN TO "reymon.rdb"
            ORGANIZATION IS INDEXED
            ACCESS MODE IS RANDOM
-           RECORD KEY IS FS-PRIMARY-KEY
-           FILE STATUS IS LS-REYMON-DATABASE-FILE-STATUS.
+           RECORD KEY IS FS-PRIMARY-KEY.
