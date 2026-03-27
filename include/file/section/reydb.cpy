@@ -10,6 +10,6 @@
       *** Logic of the file ***
       *************************
 
-       FD FC-REYMON-DATABASE.
-       01 FS-PRIMARY-KEY PIC X(18).
-       01 FS-BUFFER      PIC X(4088).
+       FD FS-REYDB.
+       01 FS-REYDB-PRIMARY-KEY PIC X(18).
+       01 FS-REYDB-BUFFER      PIC X(4088).

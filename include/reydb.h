@@ -48,8 +48,7 @@ typedef size_t primary_key;
 // **************************
 
 typedef struct _REYMON_DATABASE {
-	char     name[256];
-	uint16_t success;
+	uint16_t    success;
 } reydb_t;
 
 // ****************************
@@ -96,27 +95,27 @@ extern void REYDB_INIT();
 // ************************
 
 extern uint16_t REYDB_CREATE_DATABASE();
-extern uint16_t REYDB_CREATE_TABLE   (const reydb_table);
+extern uint16_t REYDB_CREATE_TABLE   (reydb_table);
 
 // **********************
 // *** Read Functions ***
 // **********************
 
-extern uint16_t REYDB_READ(const reydb_table);
+extern uint16_t REYDB_READ(reydb_table);
 
 // ***********************
 // *** Write Functions ***
 // ***********************
 
-extern uint16_t REYDB_ADD    (const reydb_table);
-extern uint16_t REYDB_REWRITE(const reydb_table);
+extern uint16_t REYDB_ADD    (reydb_table);
+extern uint16_t REYDB_REWRITE(reydb_table);
 
 // ************************
 // *** Search Functions ***
 // ************************
 
 extern uint16_t REYDB_SORT();
-extern uint16_t REYDB_SEARCH(const reydb_table, primary_key);
+extern uint16_t REYDB_SEARCH(reydb_table, primary_key);
 
 // ***************************
 // *** Utilities Functions ***

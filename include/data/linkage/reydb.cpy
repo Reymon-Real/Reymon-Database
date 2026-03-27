@@ -6,5 +6,6 @@
       *** License: AGPL-3-or-later ***
       ********************************
 
-       77 LS-REYMON-DATABASE-NAME   PIC X(256).
-       77 LS-REYMON-DATABASE-RESULT PIC S9(09) COMP-5.
+       77 LS-REYDB-PRIMARY-KEY PIC X(0018).
+       77 LS-REYDB-REGISTER    PIC X(4088).
+       77 LS-REYDB-RESULT      PIC S9(9) COMP-5.

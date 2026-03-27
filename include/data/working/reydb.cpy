@@ -6,6 +6,6 @@
       *** License: AGPL-3-or-later ***
       ********************************
        
-       01 WS-REYMON-DATABASE.
-          02 WS-PRIMARY-KEY PIC 9(18)   VALUE ZERO COMP-5.
-          02 WS-BUFFER      PIC X(4088) VALUE SPACE.
+       01 WS-REYDB.
+          02 WS-REYDB-PRIMARY-KEY PIC X(18)   VALUE SPACE.
+          02 WS-REYDB-BUFFER      PIC X(4088) VALUE SPACE.

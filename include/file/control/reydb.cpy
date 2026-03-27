@@ -10,8 +10,8 @@
       *** Settings of the physical file ***
       *************************************
 
-           SELECT OPTIONAL FC-REYMON-DATABASE
+           SELECT OPTIONAL FS-REYDB
            ASSIGN TO "reymon.rdb"
            ORGANIZATION IS INDEXED
            ACCESS MODE IS RANDOM
-           RECORD KEY IS FS-PRIMARY-KEY.
+           RECORD KEY IS FS-REYDB-PRIMARY-KEY.
