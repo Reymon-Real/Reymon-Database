@@ -60,8 +60,6 @@
 
       ******************************************************************
        OPEN-FILE SECTION.
-           MOVE SPACE TO  FS-REYDB-KEY.
-           MOVE SPACE TO  FS-REYDB-BUFFER.
            OPEN I-O FC-REYDB.
       ******************************************************************
 
