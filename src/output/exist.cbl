@@ -1,8 +1,8 @@
       ********************************
       *** Author:  Reymon Dev      ***
-      *** File:    add.cbl         ***
+      *** File:    exist.cbl       ***
       *** Date:    18/03/2026      ***
-      *** Update:  24/03/2026      ***
+      *** Update:  26/03/2026      ***
       *** License: AGPL-3-or-later ***
       ********************************
 
@@ -13,7 +13,7 @@
 
       ******************************************************************
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. REYDB_ADD.
+       PROGRAM-ID. REYDB_EXIST.
        AUTHOR. Reymon Dev.
        DATE-WRITTEN.  March 18 from 2026.
        DATE-COMPILED. March 24 from 2026.
@@ -26,7 +26,7 @@
       ******************************************************************
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-       
+
        COPY "file/control/reydb.cpy".
       ******************************************************************
 
@@ -36,7 +36,7 @@
 
       ******************************************************************
        FILE SECTION.
-       
+
        COPY "file/section/reydb.cpy".
       ******************************************************************
 
@@ -49,46 +49,24 @@
 
       ******************************************************************
        LINKAGE SECTION.
-       
+
        COPY "data/linkage/reydb.cpy".
       ******************************************************************
 
       ******************************************************************
-       PROCEDURE DIVISION USING BY REFERENCE LS-REYDB
-                          RETURNING LS-REYDB-RESULT.
+       PROCEDURE DIVISION RETURNING LS-REYDB-RESULT.
       ******************************************************************
 
       ******************************************************************
-       OPEN-FILE SECTION.
-           MOVE SPACE TO  FS-REYDB-KEY.
-           MOVE SPACE TO  FS-REYDB-BUFFER.
-           OPEN I-O FC-REYDB.
-      ******************************************************************
+       START-PROGRAM.
 
-      ******************************************************************
-       SET-INFO SECTION.
-           MOVE LS-REYDB-KEY    TO FS-REYDB-KEY.
-           MOVE LS-REYDB-BUFFER TO FS-REYDB-BUFFER.
-      ******************************************************************
+           PERFORM VERIFY. *> Logic for verify if file exist
 
-      ******************************************************************
-       WRITE-FILE SECTION.
-           WRITE FS-REYDB-KEY
-           INVALID KEY     DISPLAY "Not Found Key"
-           NOT INVALID KEY DISPLAY "Found Key".
-           
-           WRITE FS-REYDB-BUFFER
-           NOT INVALID KEY DISPLAY "Write Success".
-      ******************************************************************
-
-      ******************************************************************
-       CLOSE-FILE SECTION.
-           CLOSE FC-REYDB.
-      ******************************************************************
-
-      ******************************************************************
-       FIN SECTION.
-
-           MOVE WS-REYDB-SUCCESS TO LS-REYDB-RESULT.
            GOBACK.
+      ******************************************************************
+
+      ******************************************************************
+       VERIFY.
+           IF (WS-REYDB-FILE-STATUS NOT EQUAL "00")
+              MOVE WS-REYDB-SUCCESS TO LS-REYDB-RESULT.
       ******************************************************************

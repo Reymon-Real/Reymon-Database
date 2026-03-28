@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <unistd.h>
 
 // *******************************
 // *** Reymon Database Library ***
@@ -39,7 +40,8 @@ typedef struct _table_employe {
 
 static int       reydb_exit    = REYDB_SUCCESS;
 static reydb_t   reydb_test    = { ZERO };
-static employe_t reydb_employe = { ZERO, SPACE, SPACE };
+static employe_t reydb_employe;
+static employe_t reydb_employe_2;
 
 // ***********************
 // *** Local Functions ***
@@ -113,11 +115,17 @@ int main(void) {
 
 uint16_t initialize() {
 
-	reydb_test.success = REYDB_CREATE_DATABASE(); // Create a test database
-	reydb_employe.key      = 1;
+	if(REYDB_EXIST() == ZERO)
+		reydb_test.success = REYDB_CREATE_DATABASE(); // Create a test database
+
+	reydb_employe.key   = 8000;
+	reydb_employe_2.key = 8001;
 
 	memcpy(reydb_employe.salary,   "10000", sizeof("10000"));
 	memcpy(reydb_employe.currency, "CHF",   sizeof("CHF"));
+
+	memcpy(reydb_employe_2.salary,   "10000", sizeof("10000"));
+	memcpy(reydb_employe_2.currency, "CHF",   sizeof("CHF"));
 
 	return database_exist(&reydb_test);
 }
@@ -129,9 +137,15 @@ uint16_t initialize() {
 void execute() {
 
 	if (reydb_test.success == REYDB_CREATE_SUCCESS) {
-	
+		
 		printf("Create Success -> %d\n", reydb_test.success);
 		reydb_test.success = REYDB_ADD(&reydb_employe);
+
+		printf("Exist: %d\n", REYDB_EXIST());
+
+		reydb_test.success = REYDB_ADD(&reydb_employe_2);
+
+		puts("Test");
 	
 	} else
 		printf("Create Failure -> %d\n", reydb_test.success);

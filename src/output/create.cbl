@@ -1,8 +1,8 @@
       ********************************
       *** Author:  Reymon Dev      ***
-      *** File:    add.cbl         ***
+      *** File:    create.cbl      ***
       *** Date:    18/03/2026      ***
-      *** Update:  24/03/2026      ***
+      *** Update:  26/03/2026      ***
       *** License: AGPL-3-or-later ***
       ********************************
 
@@ -13,21 +13,21 @@
 
       ******************************************************************
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. REYDB_ADD.
+       PROGRAM-ID. REYDB_CREATE_DATABASE.
        AUTHOR. Reymon Dev.
        DATE-WRITTEN.  March 18 from 2026.
        DATE-COMPILED. March 24 from 2026.
       ******************************************************************
 
       ******************************************************************
-       ENVIRONMENT DIVISION.
+       ENVIRONMENT DIVISION. 
       ******************************************************************
 
       ******************************************************************
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
        
-       COPY "file/control/reydb.cpy".
+       COPY "file/control/reydb.cpy". *> Define Database File
       ******************************************************************
 
       ******************************************************************
@@ -37,58 +37,43 @@
       ******************************************************************
        FILE SECTION.
        
-       COPY "file/section/reydb.cpy".
+       COPY "file/section/reydb.cpy". *> Define Logic Database
       ******************************************************************
 
       ******************************************************************
        WORKING-STORAGE SECTION.
-
-       COPY "data/working/reydb.cpy".
-       COPY "data/working/state.cpy".
+       
+       COPY "data/working/reydb.cpy". *> Define in local data the logic file
+       COPY "data/working/state.cpy". *> Define Constants
       ******************************************************************
-
+      
       ******************************************************************
        LINKAGE SECTION.
        
-       COPY "data/linkage/reydb.cpy".
+       COPY "data/linkage/reydb.cpy". *> Define for linking the logic file
+      ******************************************************************
+      
+      ******************************************************************
+       PROCEDURE DIVISION RETURNING LS-REYDB-RESULT.
       ******************************************************************
 
       ******************************************************************
-       PROCEDURE DIVISION USING BY REFERENCE LS-REYDB
-                          RETURNING LS-REYDB-RESULT.
+       START-PROGRAM.
+       
+           PERFORM CREATE-FILE.
+           PERFORM RESULT.
+
+           GOBACK.
       ******************************************************************
 
       ******************************************************************
-       OPEN-FILE SECTION.
-           MOVE SPACE TO  FS-REYDB-KEY.
-           MOVE SPACE TO  FS-REYDB-BUFFER.
-           OPEN I-O FC-REYDB.
-      ******************************************************************
-
-      ******************************************************************
-       SET-INFO SECTION.
-           MOVE LS-REYDB-KEY    TO FS-REYDB-KEY.
-           MOVE LS-REYDB-BUFFER TO FS-REYDB-BUFFER.
-      ******************************************************************
-
-      ******************************************************************
-       WRITE-FILE SECTION.
-           WRITE FS-REYDB-KEY
-           INVALID KEY     DISPLAY "Not Found Key"
-           NOT INVALID KEY DISPLAY "Found Key".
-           
-           WRITE FS-REYDB-BUFFER
-           NOT INVALID KEY DISPLAY "Write Success".
-      ******************************************************************
-
-      ******************************************************************
-       CLOSE-FILE SECTION.
+       CREATE-FILE.
+           OPEN OUTPUT FC-REYDB.
            CLOSE FC-REYDB.
       ******************************************************************
 
       ******************************************************************
-       FIN SECTION.
-
-           MOVE WS-REYDB-SUCCESS TO LS-REYDB-RESULT.
-           GOBACK.
+       RESULT.
+           MOVE WS-REYDB-CREATE-SUCCESS
+           TO   LS-REYDB-RESULT.
       ******************************************************************

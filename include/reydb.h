@@ -95,7 +95,7 @@ extern void REYDB_INIT();
 // ************************
 
 extern uint16_t REYDB_CREATE_DATABASE();
-extern uint16_t REYDB_CREATE_TABLE   (reydb_table);
+extern uint16_t REYDB_CREATE_TABLE(reydb_table);
 
 // **********************
 // *** Read Functions ***
@@ -107,7 +107,7 @@ extern uint16_t REYDB_READ(reydb_table);
 // *** Write Functions ***
 // ***********************
 
-extern uint16_t REYDB_ADD    (reydb_table);
+extern uint16_t REYDB_ADD(reydb_table);
 extern uint16_t REYDB_REWRITE(reydb_table);
 
 // ************************
