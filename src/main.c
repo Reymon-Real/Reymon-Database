@@ -22,6 +22,23 @@
 
 #include <reydb.h>
 
+// **************
+// *** Unions ***
+// **************
+
+typedef union _union_employe {
+
+	struct {
+
+		char salary[30];
+		char currency[3];
+	
+	} fields;
+
+	char raw[512];
+
+} employe_u;
+
 // *************
 // *** Table ***
 // *************
@@ -29,19 +46,18 @@
 typedef struct _table_employe {
 
 	primary_key key;
-	char salary[30];
-	char currency[3];
+	employe_u   features;
 
-} employe_t;
+}  employe_t;
 
 // *************************
 // *** Static Variables ****
 // *************************
 
-static int       reydb_exit    = REYDB_SUCCESS;
-static reydb_t   reydb_test    = { ZERO };
-static employe_t reydb_employe;
-static employe_t reydb_employe_2;
+static int       reydb_exit      = REYDB_SUCCESS;
+static reydb_t   reydb_test      = { ZERO };
+static employe_t reydb_employe   = { ZERO, { { SPACE, SPACE } } };
+static employe_t reydb_employe_2 = { ZERO, { { SPACE, SPACE } } };
 
 // ***********************
 // *** Local Functions ***
@@ -121,11 +137,11 @@ uint16_t initialize() {
 	reydb_employe.key   = 8000;
 	reydb_employe_2.key = 8001;
 
-	memcpy(reydb_employe.salary,   "10000", sizeof("10000"));
-	memcpy(reydb_employe.currency, "CHF",   sizeof("CHF"));
+	memcpy(reydb_employe.features.fields.salary,   "10000", sizeof("10000"));
+	memcpy(reydb_employe.features.fields.currency, "CHF",   sizeof("CHF"));
 
-	memcpy(reydb_employe_2.salary,   "10000", sizeof("10000"));
-	memcpy(reydb_employe_2.currency, "CHF",   sizeof("CHF"));
+	memcpy(reydb_employe_2.features.fields.salary,   "10000", sizeof("10000"));
+	memcpy(reydb_employe_2.features.fields.currency, "CHF",   sizeof("CHF"));
 
 	return database_exist(&reydb_test);
 }
@@ -142,6 +158,7 @@ void execute() {
 		reydb_test.success = REYDB_ADD(&reydb_employe);
 
 		printf("Exist: %d\n", REYDB_EXIST());
+		printf("Exist: %ld\n", sizeof(employe_t));
 
 		reydb_test.success = REYDB_ADD(&reydb_employe_2);
 

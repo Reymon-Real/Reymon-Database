@@ -71,12 +71,9 @@
 
       ******************************************************************
        WRITE-FILE SECTION.
-           WRITE FS-REYDB-KEY
+           WRITE FS-REYDB
            INVALID KEY     DISPLAY "Not Found Key"
            NOT INVALID KEY DISPLAY "Found Key".
-           
-           WRITE FS-REYDB-BUFFER
-           NOT INVALID KEY DISPLAY "Write Success".
       ******************************************************************
 
       ******************************************************************
