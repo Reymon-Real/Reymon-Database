@@ -54,13 +54,22 @@
       ******************************************************************
 
       ******************************************************************
-       PROCEDURE DIVISION USING BY REFERENCE LS-REYDB
+       PROCEDURE DIVISION USING     LS-REYDB-RECORD
                           RETURNING LS-REYDB-RESULT.
       ******************************************************************
 
       ******************************************************************
        OPEN-FILE SECTION.
            OPEN I-O FC-REYDB.
+      ******************************************************************
+
+      ******************************************************************
+       OPEN-STATUS SECTION.
+           IF WS-REYDB-FILE-STATUS NOT EQUAL "00"
+              DISPLAY "OPEN ERROR STATUS: " WS-REYDB-FILE-STATUS
+              MOVE WS-REYDB-FAILURE TO LS-REYDB-RESULT
+              GOBACK
+           END-IF.
       ******************************************************************
 
       ******************************************************************
@@ -71,7 +80,7 @@
 
       ******************************************************************
        WRITE-FILE SECTION.
-           WRITE FS-REYDB
+           WRITE FS-REYDB-RECORD
            INVALID KEY     DISPLAY "Not Found Key"
            NOT INVALID KEY DISPLAY "Found Key".
       ******************************************************************
@@ -79,6 +88,9 @@
       ******************************************************************
        CLOSE-FILE SECTION.
            CLOSE FC-REYDB.
+           IF WS-REYDB-FILE-STATUS NOT EQUAL "00"
+              DISPLAY "CLOSE ERROR STATUS: " WS-REYDB-FILE-STATUS
+           END-IF.
       ******************************************************************
 
       ******************************************************************
