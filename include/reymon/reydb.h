@@ -3,7 +3,7 @@
 // *** File:    reydb.h         ***
 // *** License: AGPL-3-or-later ***
 // *** Date:    18/03/2026      ***
-// *** Update:  27/03/2026      ***
+// *** Update:  31/03/2026      ***
 // ********************************
 
 #ifndef REYDB_H
@@ -30,7 +30,7 @@ typedef void* reydb_table;
 // *** Define General Data Types ***
 // *********************************
 
-typedef size_t primary_key;
+typedef size_t reydb_key;
 
 // ***************************
 // *** Define Basic Macros ***
@@ -48,7 +48,9 @@ typedef size_t primary_key;
 // **************************
 
 typedef struct _REYMON_DATABASE {
-	uint16_t    success;
+	reydb_key key;
+	char raw[512];
+
 } reydb_t;
 
 // ****************************
@@ -57,15 +59,38 @@ typedef struct _REYMON_DATABASE {
 
 typedef enum _REYDB_STATE {
 
-	REYDB_SUCCESS = ZERO | 0b0000000000000000,
-	REYDB_FAILURE = ZERO | 0b0000000000000001,
+	REYDB_SUCCESS = ZERO,
+	REYDB_FAILURE = 1,
 
-	REYDB_CREATE_SUCCESS = ZERO | 0b0000000000000010,
-	REYDB_CREATE_FAILURE = ZERO | 0b0000000000000011,
+	REYDB_CREATE_SUCCESS = 2,
+	REYDB_CREATE_FAILURE = 3,
 
-	REYDB_CRITICAL_ERROR = ZERO | 0b1000000000000000,
+	REYDB_REMOVE_SUCCESS = 4,
+	REYDB_REMOVE_FAILURE = 5,
+
+	REYDB_WRITE_SUCCESS = 6,
+	REYDB_WRITE_FAILURE = 7,
+
+	REYDB_CONTINUE = 8,
+	REYDB_BREAK    = 9,
+
+	REYDB_CRITICAL_ERROR = 0b1000000000000000,
 
 } reydb_state;
+
+// ******************
+// *** Operations ***
+// ******************
+
+typedef enum _REYDB_OPERATION {
+
+	REYDB_OPERATION_ADD     = 10,
+	REYDB_OPERATION_REMOVE  = 11,
+	REYDB_OPERATION_REWRITE = 12,
+	REYDB_OPERATION_SORT    = 13,
+	REYDB_OPERATION_SEARCH  = 14,
+
+} reydb_oper;
 
 // *******************
 // *** Permissions ***
@@ -79,6 +104,14 @@ typedef enum _REYDB_PERMISSIONS {
 	REYDB_PERMIT_DELETE,
 
 } reydb_permit;
+
+// **************************
+// *** Special Structures ***
+// **************************
+
+typedef struct _REYMON_DATABASE_STATE {
+	reydb_state success;
+} reydb_state_t;
 
 // *****************************
 // *** Environmnet Functions ***
@@ -94,35 +127,34 @@ extern void REYDB_INIT();
 // *** Output Functions ***
 // ************************
 
-extern uint16_t REYDB_CREATE_DATABASE();
-extern uint16_t REYDB_CREATE_TABLE(reydb_table);
-
-// **********************
-// *** Read Functions ***
-// **********************
-
-extern uint16_t REYDB_READ(reydb_table);
+extern reydb_state REYDB_CREATE_DATABASE(); // Create the database
 
 // ***********************
-// *** Write Functions ***
+// *** Input Functions ***
 // ***********************
 
-extern uint16_t REYDB_ADD(reydb_table);
-extern uint16_t REYDB_REWRITE(reydb_table);
+extern reydb_state REYDB_READ(reydb_table); // Read the database without making a single change
+
+// ************************
+// *** Output Functions ***
+// ************************
+
+extern reydb_state REYDB_ADD(reydb_table);     // Add a record to the database
+extern reydb_state REYDB_REMOVE(reydb_table);  // Delete a record from the database
+extern reydb_state REYDB_REWRITE(reydb_table); // Rewrite a record
 
 // ************************
 // *** Search Functions ***
 // ************************
 
-extern uint16_t REYDB_SORT();
-extern uint16_t REYDB_SEARCH(reydb_table, primary_key);
+extern reydb_state REYDB_SORT(); // Sort the records
+extern reydb_state REYDB_SEARCH(reydb_table); // Search the register in the database 
 
 // ***************************
 // *** Utilities Functions ***
 // ***************************
 
-extern uint16_t REYDB_COUNT();
-extern uint16_t REYDB_EXIST();
+extern reydb_state REYDB_EXIST(); // Function to check if the database exists
 
 #ifdef _cpluplus
 }

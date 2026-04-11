@@ -1,10 +1,10 @@
-      ********************************
-      *** Author:  Reymon Dev      ***
-      *** File:    add.cbl         ***
-      *** Date:    18/03/2026      ***
-      *** Update:  27/03/2026      ***
-      *** License: AGPL-3-or-later ***
-      ********************************
+      ***********************************
+      *** Author:  Reymon Dev         ***
+      *** File:    add.cbl            ***
+      *** Date:    April 10 from 2026 ***
+      *** Update:  April 10 from 2026 ***
+      *** License: AGPL-3-or-later    ***
+      ***********************************
 
       ***************************************
       *** Division for set configurations ***
@@ -13,10 +13,10 @@
 
       ******************************************************************
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. REYDB_ADD.
+       PROGRAM-ID. REYDB_REMOVE IS INITIAL.
        AUTHOR. Reymon Dev.
-       DATE-WRITTEN.  March 18 from 2026.
-       DATE-COMPILED. March 27 from 2026.
+       DATE-WRITTEN.  April 10 from 2026.
+       DATE-COMPILED. April 10 from 2026.
       ******************************************************************
 
       ******************************************************************
@@ -59,43 +59,24 @@
       ******************************************************************
 
       ******************************************************************
-       OPEN-FILE SECTION.
-           OPEN I-O FC-REYDB.
-      ******************************************************************
+           OPEN I-O FC-REYDB. *> Open the file to process using output logic
 
-      ******************************************************************
-       OPEN-STATUS SECTION.
-           IF WS-REYDB-FILE-STATUS NOT EQUAL "00"
-              DISPLAY "OPEN ERROR STATUS: " WS-REYDB-FILE-STATUS
-              MOVE WS-REYDB-FAILURE TO LS-REYDB-RESULT
-              GOBACK
-           END-IF.
-      ******************************************************************
+           MOVE LS-REYDB-KEY    TO FS-REYDB-KEY.    *> Set Primary Key in the database
+           MOVE LS-REYDB-BUFFER TO FS-REYDB-BUFFER. *> Set content of the table in the database
 
-      ******************************************************************
-       SET-INFO SECTION.
-           MOVE LS-REYDB-KEY    TO FS-REYDB-KEY.
-           MOVE LS-REYDB-BUFFER TO FS-REYDB-BUFFER.
-      ******************************************************************
+           READ FC-REYDB KEY IS FS-REYDB-KEY
+           
+           INVALID KEY
+           MOVE WS-REYDB-REMOVE-FAILURE TO LS-REYDB-RESULT
+           
+           NOT INVALID KEY
 
-      ******************************************************************
-       WRITE-FILE SECTION.
-           WRITE FS-REYDB-RECORD
-           INVALID KEY     DISPLAY "Not Found Key"
-           NOT INVALID KEY DISPLAY "Found Key".
-      ******************************************************************
+           DELETE FC-REYDB *> Delete Register
+           MOVE WS-REYDB-REMOVE-SUCCESS TO LS-REYDB-RESULT
+           
+           END-READ.
 
-      ******************************************************************
-       CLOSE-FILE SECTION.
            CLOSE FC-REYDB.
-           IF WS-REYDB-FILE-STATUS NOT EQUAL "00"
-              DISPLAY "CLOSE ERROR STATUS: " WS-REYDB-FILE-STATUS
-           END-IF.
-      ******************************************************************
 
-      ******************************************************************
-       FIN SECTION.
-
-           MOVE WS-REYDB-SUCCESS TO LS-REYDB-RESULT.
            GOBACK.
       ******************************************************************

@@ -7,12 +7,30 @@
       ********************************
 
       *************************************
-      *** Settings of the physical file ***
+      *** Settings of the database file ***
       *************************************
 
            SELECT FC-REYDB
-           ASSIGN TO "reymon.rdb"
+           ASSIGN TO "reymon.db"
            ORGANIZATION IS INDEXED
            ACCESS MODE IS RANDOM
            RECORD KEY IS FS-REYDB-KEY
            FILE STATUS WS-REYDB-FILE-STATUS.
+      
+      **********************************
+      *** Settings for the Work File ***
+      **********************************
+
+           SELECT FC-WORK
+           ASSIGN TO "work.dat".
+
+      **************************************
+      *** Settings for the Temporal File ***
+      **************************************
+
+           SELECT FC-TEMP
+           ASSIGN TO "temporal.dat"
+           ORGANIZATION IS INDEXED
+           ACCESS MODE IS SEQUENTIAL
+           RECORD KEY IS FS-TEMP-KEY
+           FILE STATUS WS-TEMP-FILE-STATUS.

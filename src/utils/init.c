@@ -7,7 +7,7 @@
 // ********************************
 
 #include <libcob.h>
-#include <reydb.h>
+#include <reymon/reydb.h>
 
 void REYDB_INIT() {
 

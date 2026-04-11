@@ -1,10 +1,10 @@
-      ********************************
-      *** Author:  Reymon Dev      ***
-      *** File:    exist.cbl       ***
-      *** Date:    18/03/2026      ***
-      *** Update:  26/03/2026      ***
-      *** License: AGPL-3-or-later ***
-      ********************************
+      ***********************************
+      *** Author:  Reymon Dev         ***
+      *** File:    add.cbl            ***
+      *** Date:    April 10 from 2026 ***
+      *** Update:  April 10 from 2026 ***
+      *** License: AGPL-3-or-later    ***
+      ***********************************
 
       ***************************************
       *** Division for set configurations ***
@@ -13,10 +13,10 @@
 
       ******************************************************************
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. REYDB_EXIST.
+       PROGRAM-ID. REYDB_SEARCH IS INITIAL.
        AUTHOR. Reymon Dev.
-       DATE-WRITTEN.  March 26 from 2026.
-       DATE-COMPILED. March 26 from 2026.
+       DATE-WRITTEN.  April 10 from 2026.
+       DATE-COMPILED. April 10 from 2026.
       ******************************************************************
 
       ******************************************************************
@@ -26,7 +26,7 @@
       ******************************************************************
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-
+       
        COPY "file/control/reydb.cpy".
       ******************************************************************
 
@@ -36,7 +36,7 @@
 
       ******************************************************************
        FILE SECTION.
-
+       
        COPY "file/section/reydb.cpy".
       ******************************************************************
 
@@ -49,24 +49,38 @@
 
       ******************************************************************
        LINKAGE SECTION.
-
+       
        COPY "data/linkage/reydb.cpy".
       ******************************************************************
 
       ******************************************************************
-       PROCEDURE DIVISION RETURNING LS-REYDB-RESULT.
+       PROCEDURE DIVISION USING     LS-REYDB-RECORD
+                          RETURNING LS-REYDB-RESULT.
       ******************************************************************
 
       ******************************************************************
-       START-PROGRAM.
+           OPEN I-O FC-REYDB. *> Open the file to process using output logic
 
-           PERFORM VERIFY. *> Logic for verify if file exist
+           MOVE LS-REYDB-KEY    TO FS-REYDB-KEY.    *> Set Primary Key in the database
+           MOVE LS-REYDB-BUFFER TO FS-REYDB-BUFFER. *> Set content of the table in the database
+
+           READ FC-REYDB KEY IS FS-REYDB-KEY
+           
+           INVALID KEY
+
+           DISPLAY "Register Not Found"
+
+           MOVE WS-REYDB-REMOVE-FAILURE TO LS-REYDB-RESULT
+           
+           NOT INVALID KEY
+
+           DISPLAY FS-REYDB-RECORD
+
+           MOVE WS-REYDB-REMOVE-SUCCESS TO LS-REYDB-RESULT
+           
+           END-READ.
+
+           CLOSE FC-REYDB.
 
            GOBACK.
-      ******************************************************************
-
-      ******************************************************************
-       VERIFY.
-           IF (WS-REYDB-FILE-STATUS NOT EQUAL "00")
-              MOVE WS-REYDB-SUCCESS TO LS-REYDB-RESULT.
       ******************************************************************

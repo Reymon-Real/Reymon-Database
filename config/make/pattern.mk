@@ -21,14 +21,11 @@ $(OBJECT_FOLDER_OUTPUT)/%.c.o: $(SOURCE_FOLDER_OUTPUT)/%.c
 $(OBJECT_FOLDER_UTILS)/%.cbl.o: $(SOURCE_FOLDER_UTILS)/%.cbl
 	@mkdir -p $(dir $@)
 	$(COB) $(COBFLAGS) -c $< -o $@
-	@$(RM) $(RMFLAGS) *.lst
 
 $(OBJECT_FOLDER_INPUT)/%.cbl.o: $(SOURCE_FOLDER_INPUT)/%.cbl
 	@mkdir -p $(dir $@)
 	$(COB) $(COBFLAGS) -c $< -o $@
-	@$(RM) $(RMFLAGS) *.lst
 
 $(OBJECT_FOLDER_OUTPUT)/%.cbl.o: $(SOURCE_FOLDER_OUTPUT)/%.cbl
 	@mkdir -p $(dir $@)
 	$(COB) $(COBFLAGS) -c $< -o $@
-	@$(RM) $(RMFLAGS) *.lst

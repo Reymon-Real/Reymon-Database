@@ -1,6 +1,6 @@
       ********************************
       *** Author:  Reymon Dev      ***
-      *** File:    create.cbl      ***
+      *** File:    add.cbl         ***
       *** Date:    18/03/2026      ***
       *** Update:  31/03/2026      ***
       *** License: AGPL-3-or-later ***
@@ -13,21 +13,21 @@
 
       ******************************************************************
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. REYDB_CREATE_DATABASE IS INITIAL.
+       PROGRAM-ID. REYDB_ADD IS INITIAL.
        AUTHOR. Reymon Dev.
        DATE-WRITTEN.  March 18 from 2026.
        DATE-COMPILED. March 31 from 2026.
       ******************************************************************
 
       ******************************************************************
-       ENVIRONMENT DIVISION. 
+       ENVIRONMENT DIVISION.
       ******************************************************************
 
       ******************************************************************
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
        
-       COPY "file/control/reydb.cpy". *> Define Database File
+       COPY "file/control/reydb.cpy".
       ******************************************************************
 
       ******************************************************************
@@ -37,41 +37,46 @@
       ******************************************************************
        FILE SECTION.
        
-       COPY "file/section/reydb.cpy". *> Define Logic Database
+       COPY "file/section/reydb.cpy".
       ******************************************************************
 
       ******************************************************************
        WORKING-STORAGE SECTION.
-       
-       COPY "data/working/reydb.cpy". *> Define in local data the logic file
-       COPY "data/working/state.cpy". *> Define Constants
+
+       COPY "data/working/reydb.cpy".
+       COPY "data/working/state.cpy".
       ******************************************************************
-      
+
       ******************************************************************
        LINKAGE SECTION.
        
-       COPY "data/linkage/reydb.cpy". *> Define for linking the logic file
+       COPY "data/linkage/reydb.cpy".
       ******************************************************************
-      
+
       ******************************************************************
-       PROCEDURE DIVISION RETURNING LS-REYDB-RESULT.
+       PROCEDURE DIVISION USING     LS-REYDB-RECORD
+                          RETURNING LS-REYDB-RESULT.
+      ******************************************************************
 
-           DISPLAY "CREATE FILE REYMON.DB". *> Inform the user that the
-                                            *> file is being created
+      ******************************************************************
+           OPEN EXTEND FC-REYDB. *> Open the file to process using output logic
 
-           OPEN OUTPUT FC-REYDB. *> Create File if not exist and reboot data if exist
+           MOVE LS-REYDB-KEY    TO FS-REYDB-KEY.    *> Set Primary Key in the database
+           MOVE LS-REYDB-BUFFER TO FS-REYDB-BUFFER. *> Set content of the table in the database
 
-           IF WS-REYDB-FILE-STATUS EQUAL "00" *> Verify result from open if file exist
+           WRITE FS-REYDB-RECORD                          *> Write table
            
-              MOVE WS-REYDB-CREATE-SUCCESS TO LS-REYDB-RESULT
-              
-           ELSE
+           INVALID KEY *> Verify if the key exist
+               
+               MOVE WS-REYDB-FAILURE TO LS-REYDB-RESULT
+           
+           NOT INVALID KEY *> Verify if the key not exist
+               
+               MOVE WS-REYDB-SUCCESS TO LS-REYDB-RESULT *> The operation is successful.
+           
+           END-WRITE.
 
-              MOVE WS-REYDB-CREATE-FAILURE TO LS-REYDB-RESULT
-              
-           END-IF.
-
-           CLOSE FC-REYDB. *> Not Problem with file status
+           CLOSE FC-REYDB.
 
            GOBACK.
       ******************************************************************

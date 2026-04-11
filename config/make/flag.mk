@@ -9,7 +9,7 @@ COBWARNINGS := -Wall -Wextra -Werror
 # *** Select Standar Language ***
 # *******************************
 
-CSTD   := -std=c99
+CSTD   := -std=gnu99
 
 # *****************************
 # *** Standar Compiler Find ***
@@ -22,7 +22,7 @@ COBFIND := -I$(HEADER_FOLDER)
 # *** Compiler Flags ***
 # **********************
 
-CFLAGS   := $(CWARNING) $(CSTD) $(CFIND)
+CFLAGS   := $(CWARNING) $(CSTD)
 COBFLAGS := -q64
 
 ################################################################
@@ -31,25 +31,27 @@ COBFLAGS := -q64
 # *** Linker Warnings ***
 # ***********************
 
-LDWARNING := 
+CCLDWARNING  := -Wl,--warn-once -Wl,--warn-common
+COBLDWARNING := --warn-once --warn-common
 
 # *******************
 # *** Linker Find ***
 # *******************
 
-LDFIND := -L$(LIBRARY_FOLDER)
+CCLDFIND  := -L$(LIBRARY_FOLDER)
+COBLDFIND := -L$(LIBRARY_FOLDER)
 
 # ********************
 # *** Dynamic Link ***
 # ********************
 
-LD_DYNAMIC_LINK := -l:libc.so -l:libm.so -l:libz.so -l:libcob2_64r.so -l:librt.so.1 -l:libdl.so.2 -l:libicuuc_64r.so -l:libicui18n_64r.so -l:libdfp_64r.so -l:libicudata_64r.so
+COMMON_DYNAMIC_LINK := -l:libc.so -l:libm.so -l:libz.so -l:libcob2_64r.so -l:librt.so.1 -l:libdl.so.2 -l:libicuuc_64r.so -l:libicui18n_64r.so -l:libdfp_64r.so -l:libicudata_64r.so
 
 # ****************************
 # *** Linker Relative Path ***
 # ****************************
 
-LD_RELATIVE_PATH := -Wl,-rpath,"$(LIBRARY_FOLDER)"
+CCLD_RELATIVE_PATH := -Wl,-rpath,"$(LIBRARY_FOLDER)"
 
 ################################################################
 
@@ -57,5 +59,6 @@ LD_RELATIVE_PATH := -Wl,-rpath,"$(LIBRARY_FOLDER)"
 # *** Utilities Flags ***
 # ***********************
 
-ARFLAGS := crsT
-LDFLAGS := $(LDWARNING) $(LDFIND)
+ARFLAGS    := crsT
+CCLDFLAGS  := $(CCLDWARNING)
+COBLDFLAGS := $(COBLDWARNING) $(COBLDFIND)

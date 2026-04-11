@@ -2,7 +2,7 @@
 # *** Compilers ***
 # *****************
 
-CC  := gcc
+CC  := cc
 COB := cob2
 
 # *****************
@@ -11,5 +11,5 @@ COB := cob2
 
 AR := ar
 
-LD    := gcc
-LDCOB := cob2
+CCLD  := cc
+COBLD := cob2

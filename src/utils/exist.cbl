@@ -1,52 +1,74 @@
       ********************************
       *** Author:  Reymon Dev      ***
-      *** File:    reydb_state.cpy ***
-      *** Date:    20/03/2026      ***
-      *** Update:  20/03/2026      ***
+      *** File:    exist.cbl       ***
+      *** Date:    18/03/2026      ***
+      *** Update:  30/03/2026      ***
       *** License: AGPL-3-or-later ***
       ********************************
 
+      ***************************************
+      *** Division for set configurations ***
+      ***       of the program            ***
+      ***************************************
+
       ******************************************************************
-       01 WS-REYDB-SUCCESS.
-          02 FILLER PIC 9(4) VALUE ZERO COMP-5.
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. REYDB_EXIST IS INITIAL.
+       AUTHOR. Reymon Dev.
+       DATE-WRITTEN.  March 26 from 2026.
+       DATE-COMPILED. March 30 from 2026.
       ******************************************************************
 
       ******************************************************************
-       01 WS-REYDB-FAILURE.
-          02 FILLER PIC 9(4) VALUE 00001 COMP-5.
+       ENVIRONMENT DIVISION.
       ******************************************************************
 
       ******************************************************************
-       01 WS-REYDB-CREATE-SUCCESS.
-          02 FILLER PIC 9(4) VALUE 00002 COMP-5.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+
+       COPY "file/control/reydb.cpy".
       ******************************************************************
 
       ******************************************************************
-       01 WS-REYDB-CREATE-FAILURE.
-          02 FILLER PIC 9(4) VALUE 00003 COMP-5.
+       DATA DIVISION.
       ******************************************************************
 
       ******************************************************************
-       01 WS-REYDB-REMOVE-SUCCESS.
-          02 FILLER PIC 9(4) VALUE 00004 COMP-5.
+       FILE SECTION.
+
+       COPY "file/section/reydb.cpy".
       ******************************************************************
 
       ******************************************************************
-       01 WS-REYDB-REMOVE-FAILURE.
-          02 FILLER PIC 9(4) VALUE 00005 COMP-5.
+       WORKING-STORAGE SECTION.
+
+       COPY "data/working/reydb.cpy".
+       COPY "data/working/state.cpy".
       ******************************************************************
 
       ******************************************************************
-       01 WS-REYDB-WRITE-SUCCESS.
-          02 FILLER PIC 9(4) VALUE 00006 COMP-5.
+       LINKAGE SECTION.
+
+       COPY "data/linkage/reydb.cpy".
       ******************************************************************
 
       ******************************************************************
-       01 WS-REYDB-WRITE-FAILURE.
-          02 FILLER PIC 9(4) VALUE 00007 COMP-5.
-      ******************************************************************
+       PROCEDURE DIVISION RETURNING LS-REYDB-RESULT.
 
-      ******************************************************************
-       01 WS-REYDB-CRITICAL-ERROR.
-          02 FILLER PIC 9(4) VALUE 32768 COMP-5.
+           OPEN I-O FC-REYDB. *> Open file if exist
+
+           IF WS-REYDB-FILE-STATUS EQUAL "00" *> Verify if the file exist
+              
+              MOVE WS-REYDB-SUCCESS TO LS-REYDB-RESULT
+           
+           ELSE
+              
+              MOVE WS-REYDB-FAILURE TO LS-REYDB-RESULT
+           
+           END-IF.
+
+           CLOSE FC-REYDB. *> Not problem with file status
+
+           GOBACK.
       ******************************************************************

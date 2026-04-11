@@ -5,16 +5,23 @@
 RM      := rm
 RMFLAGS := -rf
 
+# *******************************
+# *** Environment C Variables ***
+# *******************************
+
+export C_INCLUDE_PATH := include
+
 # ***********************************
 # *** Environment COBOL Variables ***
 # ***********************************
 
-#export COBPATH   := "lib"
+export SYSLIB    := include:include/reymon
 export COBOPT    := 
-export SYSLIB    := include
+export COBCPYEXT := .cpy
+export COBLSTDIR := build/list
 
 # ************************************
 # *** Environment Linker Variables ***
 # ************************************
 
-#export LD_LIBRARY_PATH := "lib"
+export LIBRARY_PATH := lib

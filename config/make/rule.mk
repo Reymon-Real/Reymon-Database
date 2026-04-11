@@ -2,7 +2,14 @@
 # *** Main Rule ***
 # *****************
 
-all: object library executable
+all: init object library executable
+
+# *****************
+# *** Init Rule ***
+# *****************
+
+init:
+	@mkdir -p build/list
 
 # ********************
 # *** Execut Rules ***
@@ -18,7 +25,7 @@ run: $(BINARY_FILE_EXECUTABLE_TEST)
 clean: clean-object clean-binary
 
 distclean:
-	$(RM) $(RMFLAGS) build reymon.rdb $(LIBRARY_FOLDER)/$(BINARY_FILE_LIBRARY_SHARED_REYDB) $(BINARY_FILE_EXECUTABLE_TEST)
+	$(RM) $(RMFLAGS) build reymon.db $(LIBRARY_FOLDER)/$(BINARY_FILE_LIBRARY_SHARED_REYDB) $(BINARY_FILE_EXECUTABLE_TEST)
 
 clean-object: clean-main clean-input clean-output
 
