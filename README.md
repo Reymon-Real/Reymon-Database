@@ -1,5 +1,12 @@
 ![Reymon Dev](assets/reymon_dev.png)
 
+# Aviso Legal
+
+Este proyecto no distribuye ningún archivo de IBM COBOL for Linux x86
+Si quieres usar el compilador debes de pedirle a IBM una prueba
+En caso de querer usar este proyecto para alguna actividad que te traiga algún beneficio económico,
+debes de adquirir la licencia comercial de IBM.
+
 # Reymon Database
 Es un gestor de bases de datos bastante primitivo.
 Solo es un mini proyecto para pasar una materia.

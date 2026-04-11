@@ -60,20 +60,30 @@
 
       ******************************************************************
            OPEN I-O FC-REYDB. *> Open the file to process using output logic
-
-           MOVE LS-REYDB-KEY    TO FS-REYDB-KEY.    *> Set Primary Key in the database
-           MOVE LS-REYDB-BUFFER TO FS-REYDB-BUFFER. *> Set content of the table in the database
            
+           MOVE LS-REYDB-KEY    TO FS-REYDB-KEY.
+
            READ FC-REYDB KEY IS FS-REYDB-KEY
 
            INVALID KEY *> Verify if the key exist
-               
+
                MOVE WS-REYDB-WRITE-FAILURE TO LS-REYDB-RESULT
            
            NOT INVALID KEY *> Verify if the key not exist
                
+               MOVE LS-REYDB-BUFFER TO FS-REYDB-BUFFER.
+               
                REWRITE FS-REYDB-RECORD *> Update Register
+               
+               INVALID KEY
+                  DISPLAY "Invalid Key for Rewrite"
 
+               NOT INVALID KEY
+                  DISPLAY "Valid Key"
+                  DISPLAY "File Status: " WS-REYDB-FILE-STATUS
+
+               END-REWRITE
+               
                MOVE WS-REYDB-WRITE-SUCCESS TO LS-REYDB-RESULT *> The operation is successful.
 
             END-READ

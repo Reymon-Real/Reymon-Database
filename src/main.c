@@ -326,8 +326,9 @@ void operations(reydb_table table) {
 		REYDB_REMOVE(table);
 	
 	} else if (option == REYDB_OPERATION_REWRITE) {
-	
-		REYDB_REWRITE(table);
+		
+		strcpy(reydb_employe.features.fields.salary, "50000");
+		REYDB_REWRITE(&reydb_employe);
 	
 	} else if (option == REYDB_OPERATION_SORT) {
 		
