@@ -2,8 +2,10 @@
 
 # Aviso Legal
 
-Este proyecto no distribuye ningún archivo de IBM COBOL for Linux x86
-Si quieres usar el compilador debes de pedirle a IBM una prueba
+Este proyecto no distribuye ningún archivo de IBM COBOL for Linux x86.
+
+Si quieres usar el compilador debes de pedirle a IBM una prueba o adquirir la licencia comercial.
+
 En caso de querer usar este proyecto para alguna actividad que te traiga algún beneficio económico,
 debes de adquirir la licencia comercial de IBM.
 
