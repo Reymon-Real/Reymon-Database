@@ -148,7 +148,7 @@ extern reydb_state REYDB_REWRITE(reydb_table); // Rewrite a record
 // ************************
 
 extern reydb_state REYDB_SORT(); // Sort the records
-extern reydb_state REYDB_SEARCH(reydb_table); // Search the register in the database 
+extern reydb_table REYDB_SEARCH(reydb_key); // Search the register in the database 
 
 // ***************************
 // *** Utilities Functions ***

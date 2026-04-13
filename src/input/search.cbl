@@ -50,33 +50,32 @@
       ******************************************************************
        LINKAGE SECTION.
        
-       COPY "data/linkage/reydb.cpy".
+       77 LS-REYDB-KEY PIC 9(18) COMP-5.
+       77 LS-REYDB-POINTER USAGE IS POINTER.
+       
       ******************************************************************
 
       ******************************************************************
-       PROCEDURE DIVISION USING     LS-REYDB-RECORD
-                          RETURNING LS-REYDB-RESULT.
+       PROCEDURE DIVISION USING BY VALUE LS-REYDB-KEY
+                          RETURNING LS-REYDB-POINTER.
       ******************************************************************
 
       ******************************************************************
            OPEN I-O FC-REYDB. *> Open the file to process using output logic
 
-           MOVE LS-REYDB-KEY    TO FS-REYDB-KEY.    *> Set Primary Key in the database
-           MOVE LS-REYDB-BUFFER TO FS-REYDB-BUFFER. *> Set content of the table in the database
+           MOVE LS-REYDB-KEY TO FS-REYDB-KEY.    *> Set Primary Key in the Database
 
            READ FC-REYDB KEY IS FS-REYDB-KEY
            
            INVALID KEY
 
-           DISPLAY "Register Not Found"
-
-           MOVE WS-REYDB-REMOVE-FAILURE TO LS-REYDB-RESULT
+           SET LS-REYDB-POINTER TO NULL
            
            NOT INVALID KEY
 
-           DISPLAY FS-REYDB-RECORD
-
-           MOVE WS-REYDB-REMOVE-SUCCESS TO LS-REYDB-RESULT
+           MOVE FS-REYDB-KEY    TO WS-REYDB-KEY-C
+           MOVE FS-REYDB-BUFFER TO WS-REYDB-BUFFER-C
+           SET LS-REYDB-POINTER TO ADDRESS OF WS-REYDB-RECORD-C
            
            END-READ.
 

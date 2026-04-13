@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
@@ -34,6 +35,7 @@ typedef union _union_employe {
 
 		char salary[31];
 		char currency[4];
+		float hello;
 	
 	} fields;
 
@@ -59,7 +61,7 @@ typedef struct _table_employe {
 static char          reydb_accept[64];
 static int           reydb_exit      = REYDB_SUCCESS;
 static int           reydb_scanf     = ZERO;
-static employe_t     reydb_employe   = { ZERO, { { "40000.00000", "CHF" } } };
+static employe_t     reydb_employe   = { ZERO, { { "40000.00000", "CHF", 10.25 } } };
 static reydb_state_t reydb_test      = { ZERO };
 FILE*                reydb_file = NULL;
 
@@ -275,6 +277,7 @@ uint16_t response(const char* respose) {
 reydb_oper options() {
 
 	reydb_scanf = scanf("%s", reydb_accept);
+	puts("");
 
 	for (int i = ZERO; i < 64; i++) {
 
@@ -338,7 +341,36 @@ void operations(reydb_table table) {
 	
 	} else if (option == REYDB_OPERATION_SEARCH) {
 		
-		REYDB_SEARCH(table);
+		reydb_employe.key = 0;
+		strcpy(reydb_employe.features.fields.salary, "Information not available");
+		strcpy(reydb_employe.features.fields.currency, "");
+
+		printf("Key: %ld\n"
+			   "Salary: %s\n"
+			   "Currency: %s\n",
+			   reydb_employe.key,
+			   reydb_employe.features.fields.salary,
+			   reydb_employe.features.fields.currency
+		);		
+
+		employe_t* employe = (employe_t*) REYDB_SEARCH(ZERO);
+
+		if (employe != NULL) {
+
+			puts("");
+		
+			printf("Key: %ld\n"
+			   	   "Salary: %s\n"
+			       "Currency: %s\n"
+			       "Hello: %2f",
+			   	   employe -> key,
+			   	   employe -> features.fields.salary,
+			   	   employe -> features.fields.currency,
+			   	   employe -> features.fields.hello
+			);
+
+			puts("");
+		}
 	
 	}
 

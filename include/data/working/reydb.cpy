@@ -19,3 +19,9 @@
           02 WS-REYDB-KEY    PIC X(18)  VALUE SPACE.
           02 WS-REYDB-BUFFER PIC X(512) VALUE SPACE.
       ******************************************************************
+
+      ******************************************************************
+       01 WS-REYDB-RECORD-C.
+          02 WS-REYDB-KEY-C    PIC 9(18) COMP-5  VALUE ZEROS.
+          02 WS-REYDB-BUFFER-C PIC X(512)        VALUE SPACE.
+      ******************************************************************
