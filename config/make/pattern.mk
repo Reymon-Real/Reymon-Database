@@ -4,7 +4,7 @@
 
 $(OBJECT_FOLDER_UTILS)/%.c.o: $(SOURCE_FOLDER_UTILS)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -O2 -c $< -o $@
+	$(CC) $(CFLAGS) -fPIC -O2 -c $< -o $@
 
 $(OBJECT_FOLDER_INPUT)/%.c.o: $(SOURCE_FOLDER_INPUT)/%.c
 	@mkdir -p $(dir $@)

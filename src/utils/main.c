@@ -35,13 +35,12 @@
 // *** Main Function ***
 // *********************
 
-int main(void) {
+void REYDB_MAIN(void (REYDB_INIT)(), reydb_state (REYDB_LOOP)(), void (REYDB_FREE)()) {
 
-	REYDB_MAIN(REYDB_INIT, REYDB_LOOP, REYDB_FREE);
+	REYDB_INIT();
+	
+	while(REYDB_LOOP() == REYDB_CONTINUE);
+	
+	REYDB_FREE();
 
-	// ***************************
-	// *** Exit of the program ***
-	// ***************************
-
-	return EXIT_SUCCESS; // Final Defender Line
 }

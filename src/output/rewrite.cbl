@@ -61,7 +61,7 @@
       ******************************************************************
            OPEN I-O FC-REYDB. *> Open the file to process using output logic
            
-           MOVE LS-REYDB-KEY    TO FS-REYDB-KEY.
+           MOVE LS-REYDB-KEY TO FS-REYDB-KEY.
 
            READ FC-REYDB KEY IS FS-REYDB-KEY
 
@@ -76,15 +76,14 @@
                REWRITE FS-REYDB-RECORD *> Update Register
                
                INVALID KEY
-                  DISPLAY "Invalid Key for Rewrite"
+
+               MOVE WS-REYDB-WRITE-FAILURE TO LS-REYDB-RESULT *> The operation is successful.
 
                NOT INVALID KEY
-                  DISPLAY "Valid Key"
-                  DISPLAY "File Status: " WS-REYDB-FILE-STATUS
+
+               MOVE WS-REYDB-WRITE-SUCCESS TO LS-REYDB-RESULT *> The operation is successful.
 
                END-REWRITE
-               
-               MOVE WS-REYDB-WRITE-SUCCESS TO LS-REYDB-RESULT *> The operation is successful.
 
             END-READ
 

@@ -43,9 +43,6 @@
       ******************************************************************
        WORKING-STORAGE SECTION.
 
-       77 WS-SYSTEM  PIC X(06) VALUE "system".
-       77 WS-SYSCALL PIC X(64).
-
        COPY "data/working/reydb.cpy".
        COPY "data/working/state.cpy".
       ******************************************************************

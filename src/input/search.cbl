@@ -76,7 +76,7 @@
            MOVE FS-REYDB-KEY    TO WS-REYDB-KEY-C
            MOVE FS-REYDB-BUFFER TO WS-REYDB-BUFFER-C
            SET LS-REYDB-POINTER TO ADDRESS OF WS-REYDB-RECORD-C
-           
+
            END-READ.
 
            CLOSE FC-REYDB.

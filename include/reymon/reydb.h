@@ -18,6 +18,7 @@ extern "C" {
 // *************************
 
 #include <stdint.h>
+#include <stddef.h>
 #include <stdbool.h>
 
 // ********************************
@@ -31,6 +32,8 @@ typedef void* reydb_table;
 // *********************************
 
 typedef size_t reydb_key;
+typedef char   reydb_decimal;
+typedef char   reydb_string;
 
 // ***************************
 // *** Define Basic Macros ***
@@ -48,8 +51,8 @@ typedef size_t reydb_key;
 // **************************
 
 typedef struct _REYMON_DATABASE {
+	
 	reydb_key key;
-	char raw[512];
 
 } reydb_t;
 
@@ -110,14 +113,19 @@ typedef enum _REYDB_PERMISSIONS {
 // **************************
 
 typedef struct _REYMON_DATABASE_STATE {
+
 	reydb_state success;
+
 } reydb_state_t;
 
 // *****************************
 // *** Environmnet Functions ***
 // *****************************
 
-extern void REYDB_INIT();
+extern void        REYDB_MAIN(void (REYDB_INIT)(), reydb_state (REYDB_LOOP)(), void (REYDB_FREE)());
+extern void        REYDB_INIT();
+extern void        REYDB_FREE();
+extern reydb_state REYDB_LOOP();
 
 // ********************************
 // *** Administration Functions ***
