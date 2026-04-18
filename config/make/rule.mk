@@ -2,14 +2,14 @@
 # *** Main Rule ***
 # *****************
 
-all: init object library executable
+all: build/list object library executable
 
 # *****************
 # *** Init Rule ***
 # *****************
 
-init:
-	@mkdir -p build/list
+build/list:
+	@mkdir -p $@
 
 # ********************
 # *** Execut Rules ***
@@ -32,7 +32,7 @@ clean-object: clean-main clean-input clean-output
 clean-binary: clean-libreydb clean-executable
 
 clean-main:
-	$(RM) $(RMFLAGS) $(OBJECT_FILE_MAIN_C)
+	$(RM) $(RMFLAGS) $(OBJECT_FILE_MAIN_C)$(FIND_OBJECT_FILES_MAIN_COBOL)  $(FIND_OBJECT_FILES_MAIN_C)
 
 clean-utils:
 	$(RM) $(RMFLAGS) $(FIND_OBJECT_FILES_UTILS_C) $(FIND_OBJECT_FILES_UTILS_COBOL)
@@ -53,7 +53,7 @@ clean-executable:
 # *** Object Main Rule ***
 # ************************
 
-object-main: $(OBJECT_FILE_MAIN_C)
+object-main: $(OBJECT_FILE_MAIN_C)$(FIND_OBJECT_FILES_MAIN_COBOL)  $(FIND_OBJECT_FILES_MAIN_C)
 
 # ********************
 # *** Object Rules ***

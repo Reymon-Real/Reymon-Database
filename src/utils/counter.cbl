@@ -1,22 +1,17 @@
       ********************************
       *** Author:  Reymon Dev      ***
-      *** File:    add.cbl         ***
+      *** File:    exist.cbl       ***
       *** Date:    18/03/2026      ***
-      *** Update:  31/03/2026      ***
+      *** Update:  30/03/2026      ***
       *** License: AGPL-3-or-later ***
       ********************************
 
-      ***************************************
-      *** Division for set configurations ***
-      ***       of the program            ***
-      ***************************************
-
       ******************************************************************
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. REYDB_ADD IS INITIAL.
+       PROGRAM-ID. REYDB_COUNTER.
        AUTHOR. Reymon Dev.
-       DATE-WRITTEN.  March 18 from 2026.
-       DATE-COMPILED. March 31 from 2026.
+       DATE-WRITTEN.  April 16 from 2026.
+       DATE-COMPILED. April 16 from 2026.
       ******************************************************************
 
       ******************************************************************
@@ -26,7 +21,7 @@
       ******************************************************************
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-       
+
        COPY "file/control/reydb.cpy".
       ******************************************************************
 
@@ -36,47 +31,47 @@
 
       ******************************************************************
        FILE SECTION.
-       
+
        COPY "file/section/reydb.cpy".
       ******************************************************************
 
       ******************************************************************
        WORKING-STORAGE SECTION.
 
+       77 WS-COUNTER PIC 9(18) VALUE ZERO.
+
        COPY "data/working/reydb.cpy".
-       COPY "data/working/state.cpy".
       ******************************************************************
 
       ******************************************************************
        LINKAGE SECTION.
-       
+
        COPY "data/linkage/reydb.cpy".
       ******************************************************************
 
       ******************************************************************
-       PROCEDURE DIVISION USING     LS-REYDB-RECORD
-                          RETURNING LS-REYDB-RESULT.
+       PROCEDURE DIVISION RETURNING LS-REYDB-RESULT.
+      ******************************************************************
+      
+      ******************************************************************
+       INIT-PROGRAM.
+           OPEN I-O FC-REYDB.
       ******************************************************************
 
       ******************************************************************
-           OPEN I-O FC-REYDB. *> Open the file to process using output logic
+       LOGIC-PROGRAM.
+           READ FC-REYDB INTO WS-COUNTER
+       
+           INVALID KEY
 
-           MOVE LS-REYDB-KEY    TO FS-REYDB-KEY.    *> Set Primary Key in the database
-           MOVE LS-REYDB-BUFFER TO FS-REYDB-BUFFER. *> Set content of the table in the database
+           ADD 1 TO WS-COUNTER
+           MOVE WS-COUNTER TO LS-REYDB-RESULT
+       
+           END-READ.
+      ******************************************************************
 
-           WRITE FS-REYDB-RECORD                          *> Write table
-           
-           INVALID KEY *> Verify if the key exist
-               
-               MOVE WS-REYDB-FAILURE TO LS-REYDB-RESULT
-           
-           NOT INVALID KEY *> Verify if the key not exist
-               
-               MOVE WS-REYDB-SUCCESS TO LS-REYDB-RESULT *> The operation is successful.
-           
-           END-WRITE.
-
+      ******************************************************************
+       END-PROGRAM.
            CLOSE FC-REYDB.
-
            GOBACK.
       ******************************************************************

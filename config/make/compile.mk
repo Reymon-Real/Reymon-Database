@@ -6,6 +6,8 @@ $(OBJECT_FILE_MAIN_C): $(SOURCE_FILE_MAIN_C)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -O3 -c $< -o $@
 
+-include build/obj/*.d
+
 # ************************
 # *** Create Libraries ***
 # ************************
@@ -18,7 +20,7 @@ $(LIBRARY_FOLDER)/$(BINARY_FILE_LIBRARY_SHARED_REYDB): $(FIND_OBJECT_FILES_UTILS
 # *** Create Executables ***
 # **************************
 
-$(BINARY_FILE_EXECUTABLE_TEST): $(OBJECT_FILE_MAIN_C) $(LIBRARY_FOLDER)/$(BINARY_FILE_LIBRARY_SHARED_REYDB)
+$(BINARY_FILE_EXECUTABLE_TEST): $(OBJECT_FILE_MAIN_C) $(FIND_OBJECT_FILES_MAIN_COBOL) $(FIND_OBJECT_FILES_MAIN_C) | $(LIBRARY_FOLDER)/$(BINARY_FILE_LIBRARY_SHARED_REYDB)
 	@mkdir -p $(dir $@)
-	$(CCLD) $(CCLDFLAGS) -o $@ $< -l:libreydb.so $(LD_RELATIVE_PATH)
+	$(CCLD) $(CCLDFLAGS) -o $@ $^ -l:libreydb.so $(LD_RELATIVE_PATH)
 	@patchelf --set-rpath '$$ORIGIN/lib' $@

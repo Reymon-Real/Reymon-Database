@@ -162,6 +162,7 @@ extern reydb_table REYDB_SEARCH(reydb_key); // Search the register in the databa
 // *** Utilities Functions ***
 // ***************************
 
+extern reydb_key   REYDB_COUNTER();
 extern reydb_state REYDB_EXIST(); // Function to check if the database exists
 
 #ifdef _cpluplus

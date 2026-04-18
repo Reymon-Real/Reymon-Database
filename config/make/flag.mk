@@ -22,8 +22,8 @@ COBFIND := -I$(HEADER_FOLDER)
 # *** Compiler Flags ***
 # **********************
 
-CFLAGS   := $(CWARNING) $(CSTD)
-COBFLAGS := -q64
+CFLAGS   := $(CWARNING) $(CSTD) -MMD -MP
+COBFLAGS := -q64 -M
 
 ################################################################
 
